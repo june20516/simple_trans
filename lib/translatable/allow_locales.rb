@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-ALLOW_LOCALES = %i[ko en th].freeze
+ALLOW_LOCALES = (ENV['SIMPLE_TRANS_LOCALES'] || %i[en]).freeze

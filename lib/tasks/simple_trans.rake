@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 require 'optparse'
+require 'json'
+require_relative '../translatable/allow_locales'
 
-namespace :translate do
+namespace :simple_trans do
 
-  desc '[Translate] Migrate legacy record to translatable column format'
+  desc '[SimpleTrans] Migrate legacy record to translatable column format'
   task migrate: :environment do
-    option = listen_option('Usage: rake translate:migrate [options]') do |listeners|
+    option = listen_option('Usage: rake simple_trans:migrate [options]') do |listeners|
       listeners << [:name, '-m', '--model ModelName', String]
       listeners << [:attribute, '-a', '--attr attribute', String]
     end
@@ -36,14 +38,14 @@ namespace :translate do
 end
 
 def fixed_attr(val = '')
-  { ko: val, en: val, th: val, vn: val }.to_json
+  ALLOW_LOCALES.map { |l| [l, val] }.to_h.to_json
 end
 
 def valid_translate?(v)
   return false unless valid_json?(v)
 
   h = JSON.parse(v).symbolize_keys
-  return false if (h.keys & %i[ko en th vn]).empty?
+  return false if (h.keys & ALLOW_LOCALES).empty?
 
   true
 end
@@ -54,7 +56,6 @@ def valid_json?(json)
 rescue JSON::ParserError => e
   return false
 end
-
 
 def listen_option(banner, option = {})
   o = OptionParser.new
@@ -70,4 +71,3 @@ def listen_option(banner, option = {})
 
   option
 end
-

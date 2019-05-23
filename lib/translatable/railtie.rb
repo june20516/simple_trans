@@ -3,7 +3,7 @@
 module Translatable
   class Railtie < Rails::Railtie
     rake_tasks do
-      load 'tasks/translate.rake'
+      load 'tasks/simple_trans.rake'
     end
   end
 end
