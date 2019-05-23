@@ -29,3 +29,21 @@
       - Modify fetching env variable method.
       - from `ENV['SIMPLE_TRANS_LOCALES'] || %i[en]`
       - to `ENV.fetch('SIMPLE_TRANS_LOCALES', 'en').split(',').map(&:to_sym)`
+
+- (2019-05-26 patch 0.2.5) Additional way added to allow default locales.
+   - In `config/application.rb`:
+       ```ruby
+       # ..
+       
+       require 'rails/all'
+       
+       # Between require 'rails/all' and Bundler require line.
+       # Use constant 'ALLOW_LOCALES'.
+       ALLOW_LOCALES = %i[ko en th].freeze
+       
+       Bundler.require(*Rails.groups)
+       
+       require 'simple_trans' # Next of Bundler required.
+       
+       # ..
+       ```

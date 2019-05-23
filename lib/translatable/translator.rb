@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'json'
 require_relative './allow_locales'
 
 module Translatable
@@ -9,6 +10,10 @@ module Translatable
     def initialize(record, locale)
       @record = record
       @locale = locale.to_s.to_sym
+    end
+
+    def allowed_locales
+      ALLOW_LOCALES
     end
 
     def parse(attr)
@@ -30,7 +35,7 @@ module Translatable
       return false unless valid_json?(v)
 
       h = JSON.parse(v).symbolize_keys
-      return false if (h.keys & ALLOW_LOCALES).empty?
+      return false if (h.keys & allowed_locales).empty?
 
       true
     end
