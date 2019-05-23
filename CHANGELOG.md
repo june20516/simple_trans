@@ -21,3 +21,11 @@
        end
        ```
    - !NOTE: Default locale whitelist **must contain all of each column locale** on application scope.
+
+- (2019-05-26 patch 0.2.2) Fixed bug on fetching environment variable (`ENV`).
+   - **Problem**:
+      - Environment variable usually cannot be fetched not Array but String and it needs to be cascade into Symbol also.
+   - **Solved**:
+      - Modify fetching env variable method.
+      - from `ENV['SIMPLE_TRANS_LOCALES'] || %i[en]`
+      - to `ENV.fetch('SIMPLE_TRANS_LOCALES', 'en').split(',').map(&:to_sym)`
