@@ -11,7 +11,9 @@ Gem::Specification.new do |spec|
 
   spec.summary       = "Make simple way adding 'translatable column' " \
                        "for 'your legacy column' of ActiveRecord Model"
-  spec.description   = spec.summary
+  spec.description   = "Now, it works with it's whole features. " \
+                       'It needs to add some additional things for sustainablility ' \
+                       'such as ( Test, Documentation ... etc )'
   spec.homepage      = "https://github.com/yhk1038/simple_trans"
   spec.license       = "MIT"
 
